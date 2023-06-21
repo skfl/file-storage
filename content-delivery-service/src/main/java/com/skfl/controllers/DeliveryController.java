@@ -2,7 +2,6 @@ package com.skfl.controllers;
 
 import com.skfl.ResponseInfo;
 import com.skfl.services.FileDownloadService;
-import com.skfl.services.FileInfoService;
 import com.skfl.services.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -23,7 +22,6 @@ public class DeliveryController {
 
     private final FileUploadService fileUploadService;
     private final FileDownloadService fileDownloadService;
-    private final FileInfoService fileInfoService;
 
     @PostMapping("/upload")
     public ResponseEntity<ResponseInfo> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -36,7 +34,7 @@ public class DeliveryController {
         InputStreamResource resource = new InputStreamResource(fileDownloadService.download(uuid));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", fileInfoService.getFilenameByUUID(uuid));
+//        headers.setContentDispositionFormData("attachment", fileInfoService.getFilenameByUUID(uuid));
 
         return ResponseEntity.ok()
                 .headers(headers)
